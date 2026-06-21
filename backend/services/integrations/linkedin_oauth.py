@@ -160,10 +160,12 @@ class LinkedInOAuthService(OAuthProviderBase):
                     user_completion_json TEXT,
                     ai_profile_intelligence_json TEXT,
                     topic_recommendations_json TEXT,
+                    profile_optimization_json TEXT,
 
                     profile_context_updated_at TIMESTAMP,
                     ai_intelligence_updated_at TIMESTAMP,
                     recommendations_updated_at TIMESTAMP,
+                    profile_optimization_updated_at TIMESTAMP,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
@@ -180,6 +182,16 @@ class LinkedInOAuthService(OAuthProviderBase):
                 cursor.execute(
                     "ALTER TABLE linkedin_analysis_context "
                     "ADD COLUMN recommendations_updated_at TIMESTAMP"
+                )
+            if "profile_optimization_json" not in analysis_cols:
+                cursor.execute(
+                    "ALTER TABLE linkedin_analysis_context "
+                    "ADD COLUMN profile_optimization_json TEXT"
+                )
+            if "profile_optimization_updated_at" not in analysis_cols:
+                cursor.execute(
+                    "ALTER TABLE linkedin_analysis_context "
+                    "ADD COLUMN profile_optimization_updated_at TIMESTAMP"
                 )
             cursor.execute(
                 """
